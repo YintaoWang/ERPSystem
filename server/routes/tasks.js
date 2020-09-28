@@ -29,7 +29,7 @@ Router.post('/addnewtask', authMiddleware, async (req, res) => {
 
     if (isInvalidFieldProvided) {
       return res.status(400).send({
-        signup_error: 'Invalid field.'
+        addtask_error: 'Invalid field.'
       });
     }
 
@@ -60,7 +60,7 @@ Router.get('/gettasksbyuser', authMiddleware, async (req, res) => {
     try {
       const value = Number(req.query.user_id);
       const result = await pool.query(
-        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member, is_approved, approved_by from task where task_member_id=$1',
+        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member, is_approved, approved_by from task where task_member_id=$1 order by task_due_datetime',
         [value]
       );
       res.send(result.rows); //201 meaning?
@@ -76,17 +76,17 @@ Router.get('/getalltasks', authMiddleware, async (req, res) => {
     //   const value = Number(req.query.user_id);
   
       const todoTasks = await pool.query(
-        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member from task where is_approved=$1 and task_progress=$2',
+        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member from task where is_approved=$1 and task_progress=$2 order by task_due_datetime',
         [false, 0] //todo: how to search approved tasks???
       );
 
       const doingTasks = await pool.query(
-        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member from task where is_approved=$1 and task_progress>$2 and task_progress<$3',
+        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member from task where is_approved=$1 and task_progress>$2 and task_progress<$3 order by task_due_datetime',
         [false, 0, 100] //todo: how to search approved tasks???
       );
 
       const doneTasks = await pool.query(
-        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member from task where is_approved=$1 and task_progress=$2',
+        'select task_id, task_name, task_due_datetime, task_description, task_priority, task_progress, task_comment, task_member_id, task_member from task where is_approved=$1 and task_progress=$2 order by task_due_datetime',
         [false, 100] //todo: how to search approved tasks???
       );
 
@@ -129,7 +129,7 @@ Router.post('/updatetask', authMiddleware, async (req, res) => {
 
     if (isInvalidFieldProvided) {
       return res.status(400).send({
-        signup_error: 'Invalid field.'
+        updatetask_error: 'Invalid field.'
       });
     }
 
@@ -151,7 +151,7 @@ Router.post('/updatetask', authMiddleware, async (req, res) => {
     res.status(201).send();
   } catch (error) {
     res.status(400).send({
-      addtask_error: 'Error while updating task...Try again later.'
+      updatetask_error: 'Error while updating task...Try again later.'
     });
   }
 });

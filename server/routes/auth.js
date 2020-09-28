@@ -12,10 +12,10 @@ const Router = express.Router();
 
 Router.post('/signup', async (req, res) => {
   try {
-    const { first_name, last_name, role, email, password } = req.body;
+    const { firstName, lastName, role, email, password } = req.body;
     const validFieldsToUpdate = [
-      'first_name',
-      'last_name',
+      'firstName',
+      'lastName',
       'role',
       'email',
       'password'
@@ -46,8 +46,8 @@ Router.post('/signup', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 8);
     await pool.query(
-      'insert into erp_user(first_name, last_name, role_type, email, password) values($1,$2,$3,$4,$5)',
-      [first_name, last_name, role, email, hashedPassword]
+      'insert into erp_user(first_name, last_name, role_type, email, password, created_datetime) values($1,$2,$3,$4,$5,CURRENT_TIMESTAMP)',
+      [firstName, lastName, role, email, hashedPassword]
     );
     res.status(201).send();
   } catch (error) {
@@ -68,8 +68,8 @@ Router.post('/signin', async (req, res) => {
     }
     const token = await generateAuthToken(user);
     const result = await pool.query(
-      'insert into tokens(access_token, userid) values($1,$2) returning *',
-      [token, user.userid]
+      'insert into tokens(access_token, user_id) values($1,$2) returning *',
+      [token, user.user_id]
     );
     if (!result.rows[0]) {
       return res.status(400).send({
@@ -88,7 +88,7 @@ Router.post('/signin', async (req, res) => {
 Router.post('/logout', authMiddleware, async (req, res) => {
   try {
     const { userid, access_token } = req.user;
-    await pool.query('delete from tokens where userid=$1 and access_token=$2', [
+    await pool.query('delete from tokens where user_id=$1 and access_token=$2', [
       userid,
       access_token
     ]);
@@ -102,17 +102,16 @@ Router.post('/logout', authMiddleware, async (req, res) => {
 
 Router.get('/getallusers', authMiddleware, async (req, res) => {
     try {
-      const value = Number(req.query.userid);
+    //   const value = Number(req.query.userid);
   
       const result = await pool.query(
-        'select id, task_name, task_due_date, task_description, task_priority, task_progress, task_comment, task_member_id, approved from tasks where task_member_id=$1',
-        [value]
+        'select user_id, first_name, Last_name, email, password from erp_user'
       );
-      console.log(result.rows[0]);
+    //   console.log(result.rows[0]);
       res.send(result.rows); //201 meaning?
     } catch (error) {
       res.status(400).send({
-        signup_error: 'Error while retrieving tasks...Try again later.'
+        getallusers_error: 'Error while retrieving all users...Try again later.'
       });
     }
 });
