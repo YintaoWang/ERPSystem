@@ -6,7 +6,7 @@ import React from 'react';
 // import { validateFields } from '../utils/common';
 // import { resetErrors } from '../actions/errors';
 
-//todo
+//todo: delete
 class TaskDetail extends React.Component {
   state = {
       task_id: '',

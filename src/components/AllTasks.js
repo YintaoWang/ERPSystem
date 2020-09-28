@@ -33,16 +33,16 @@ function AllTasks(props) {
     
     return (
         <Container className="alltasks-container">
-            {errorMsg && errorMsg.gettasks_error && (
+            {errorMsg && errorMsg.getalltasks_error && (
                 <p className="alert alert-danger" role="alert">
                 {errorMsg.getalltasks_error}
                 </p>
             )}
             <Row>
-                <Col lg={4} className="left-col" >
+                <Col lg={4} >
                 <h2>ToDo</h2>
                 {todoTasks.map((todoTask) => (
-                    <div key={todoTask.task_id}>
+                    <div key={todoTask.task_id} className="left-col">
                         <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleDetail(todoTask)} style={{textDecoration: 'none'}}>
                         <Card.Header as="h4">{todoTask.task_name}</Card.Header>
                         <Card.Body>
@@ -53,15 +53,15 @@ function AllTasks(props) {
                             <Card.Footer><ProgressBar animated variant="success" now={todoTask.task_progress} label={`${todoTask.task_progress}%`} /></Card.Footer>
                         </Card.Body>
                         </Card>
-                        <br/>
+                        {/* <br/> */}
                     </div>
                 ))}
                 </Col>
-                <Col lg={4} className="middle-col" >
+                <Col lg={4} >
                 <h2>Doing</h2>
                 {doingTasks.map((doingTask) => (
-                    <div key={doingTask.task_id}>
-                        <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleDetail(doingTask)} style={{textDecoration: 'none'}}>
+                    <div key={doingTask.task_id} className="middle-col">
+                        <Card bg="light" text="dark" border="danger" as="a" href="/updatetask" onClick={() => handleDetail(doingTask)} style={{textDecoration: 'none'}}>
                         <Card.Header as="h4">{doingTask.task_name}</Card.Header>
                         <Card.Body>
                             <Card.Subtitle className="mb-2 text-danger">Member: {doingTask.task_member}</Card.Subtitle>
@@ -71,14 +71,14 @@ function AllTasks(props) {
                             <Card.Footer><ProgressBar animated variant="success" now={doingTask.task_progress} label={`${doingTask.task_progress}%`} /></Card.Footer>
                         </Card.Body>
                         </Card>
-                        <br/>
+                        {/* <br/> */}
                     </div>
                 ))}
                 </Col>
-                <Col lg={4} className="right-col" >
+                <Col lg={4} >
                 <h2>Done</h2>
                 {doneTasks.map((doneTask) => (
-                    <div key={doneTask.task_id}>
+                    <div key={doneTask.task_id} className="right-col">
                         <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleDetail(doneTask)} style={{textDecoration: 'none'}}>
                         <Card.Header as="h4">{doneTask.task_name}</Card.Header>
                         <Card.Body>
@@ -89,7 +89,7 @@ function AllTasks(props) {
                             <Card.Footer><ProgressBar animated variant="danger" now={doneTask.task_progress} label={`${doneTask.task_progress}%`} /></Card.Footer>
                         </Card.Body>
                         </Card>
-                        <br/>
+                        {/* <br/> */}
                     </div>
                 ))}
                 </Col>

@@ -8,6 +8,7 @@ import { updateTask } from '../actions/tasks';
 import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
 import { toLocalDateTime } from '../utils/common';
+import { history } from '../router/AppRouter';
 
 function UpdateTask(props) {
 
@@ -67,15 +68,16 @@ function UpdateTask(props) {
 
     const taskNameEntered = validateFields(fieldsToValidate);
     if (!taskNameEntered) {
-        setErrorMsg({addtask_error: 'Please enter task name.'});
+        setErrorMsg({updatetask_error: 'Please enter task name.'});
     } else {
         setIsSubmitted(true);
         props.dispatch(updateTask({ taskId, taskName, taskDueDatetime, taskPriority, taskMemberId, taskDescription, taskComment, taskProgress, updatedBy}))
         .then((response) => {
             if (response.success) {
                 //todo: redirect to?
-                setSuccessMsg('Successfully update a task!');
+                setSuccessMsg('Successfully updated the task! now redirect to tasksBoard');
                 setErrorMsg('');
+                setTimeout(() => {history.push('/alltasks')}, 3000);
             }
         });
     }
@@ -83,18 +85,18 @@ function UpdateTask(props) {
 
   return (
       <div className="login-page">
-      <br/><h1>Update a Task</h1><br/>
+      <br/><h1>Update Task</h1><br/>
       <div className="add-task-form">
           <Form onSubmit={editTask}>
-          {errorMsg && (errorMsg.addtask_error || errorMsg.getallusers_error) ? (
+          {/* {errorMsg && (errorMsg.updatetask_error || errorMsg.getallusers_error) ? (
               <p className="alert alert-danger" role="alert">
-              {errorMsg.addtask_error || errorMsg.getallusers_error}
+              {errorMsg.updatetask_error || errorMsg.getallusers_error}
               </p>
           ) : (
               isSubmitted && (
               <p className="successMsg centered-message">{successMsg}</p>
               )
-          )}
+          )} */}
           <Form.Group controlId="taskName">
               <Form.Label>Task Name</Form.Label>
               <Form.Control
@@ -182,6 +184,15 @@ function UpdateTask(props) {
               />
           </OverlayTrigger>
           </Form.Group>
+          {errorMsg && (errorMsg.updatetask_error || errorMsg.getallusers_error) ? (
+              <p className="alert alert-danger" role="alert">
+              {errorMsg.updatetask_error || errorMsg.getallusers_error}
+              </p>
+          ) : (
+              isSubmitted && (
+              <p className="successMsg centered-message">{successMsg}</p>
+              )
+          )}
           <div className="action-items">
               <Button variant="primary" type="submit">
               Update

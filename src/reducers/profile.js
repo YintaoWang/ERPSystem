@@ -1,6 +1,6 @@
 import { UPDATE_PROFILE } from '../utils/constants';
 
-//todo
+//todo: delete
 const profileReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_PROFILE:

@@ -63,7 +63,7 @@ function Login(props) {
 
     return (
       <div className="login-page">
-        <br/><h1>Hello! Welcome to Yintao's ERP</h1>
+        <br/><h1>Hello! Welcome to Yintao's ERP</h1><br/>
         <div className="login-form">
           <Form onSubmit={handleLogin}>
             {errorMsg && errorMsg.signin_error && (

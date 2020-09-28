@@ -2,7 +2,7 @@ import { SIGN_IN, SIGN_OUT, BASE_API_URL } from '../utils/constants';
 import axios from 'axios';
 import { history } from '../router/AppRouter';
 import { getErrors } from './errors';
-import { getTasksByUser } from './tasks';
+// import { getTasksByUser } from './tasks';
 //import { setAuthHeader, removeAuthHeader } from '../utils/common';
 import { post, get } from '../utils/api';
 
@@ -24,12 +24,12 @@ export const initiateLogin = (email, password) => {
       localStorage.setItem('user_token', user.token);
       dispatch(signIn(user)); //Why??? add data to redux store??? yes
       //dispatch(initiateGetProfile()); // removed 'user.email'//todo why don't use dispatch(updateProfile(user))
-      console.log(user.userid);
-      const userid = user.userid;
+    //   console.log(user.userid);
+    //   const userid = user.userid;
       //dispatch(initiateLogout()).then(() => history.push('/'));
-      dispatch(getTasksByUser(userid)).then(() => history.push('/dashboard'));
-    //   dispatch(getTasksByUser(userid));
-    //   history.push('/dashboard');
+      //   dispatch(getTasksByUser(userid));
+      //   dispatch(getTasksByUser(userid)).then(() => history.push('/dashboard')); //last ver.
+      history.push('/dashboard');
     } catch (error) {
       console.log('error');
       error.response && dispatch(getErrors(error.response.data));
@@ -43,7 +43,7 @@ export const registerNewUser = (data) => {
       await axios.post(`${BASE_API_URL}/signup`, data);
       return { success: true };
     } catch (error) {
-      console.log('error', error);
+    //   console.log('error', error);
       error.response && dispatch(getErrors(error.response.data));
       return { success: false };
     }
