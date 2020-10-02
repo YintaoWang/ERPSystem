@@ -14,7 +14,9 @@ html {
 }
 
 body {
-  font-family: Nunito, Helvetica Neue, Helvetica, sans-serif;
+  // font-family: Nunito, Helvetica Neue, Helvetica, sans-serif;
+  // font-family: Georgia;
+  font-family: Times New Roman;
   font-size: 20px;
   // background: #df744a;
   // background: #c38d9e;
@@ -30,10 +32,6 @@ body {
 //   color: #ffdc3d;
   padding: 1rem;
   letter-spacing: 1px;
-  //yintao
-  // .tasks {
-  //   background: #077707;
-  // }
 }
 
 .errorMsg {
@@ -140,6 +138,14 @@ header {
   text-align: center;
 }
 
+.add-page {
+  text-align: center;
+}
+
+.update-page {
+  text-align: center;
+}
+
 button,
 input[type='button'],
 input[type='submit'],
@@ -174,7 +180,7 @@ input[type='submit'],
 
 .add-task-form {
     width: 100%;
-    // margin: auto;
+    margin: auto;
     font-size: 2.5rem;
     text-align: left;
     // padding: 10px;
@@ -314,6 +320,7 @@ input[type='submit'],
     .left-col {
         font-size: 1.5rem;
         background: #f78888;
+        // background: hotpink;
         padding: 12px;
         // padding-left: 12px;
         // padding-right: 12px;
@@ -397,7 +404,6 @@ input[type='submit'],
 
 .sidebar {
     background-color: darkmagenta;
-
 }
 // #sidebar-wrapper{
 //     min-height: 100vh !important;
@@ -453,9 +459,6 @@ div.content {
   margin-left: 160px;
 }
 
-
-
-// @media (max-width: 500px) {
 @media screen and (max-width: 500px) {
   .sidenav {
     width: 100%;
@@ -469,19 +472,6 @@ div.content {
   div.content {
     margin-left: 0;
   }
-
-  // nav.test {
-  //   position: fixed
-  // }
-
-  // nav.test {}
-  // .collapse.in {
-  //   display: block !important;
-  // }
-  // .collapse {
-  //   display: none !important;
-  //   // overflow: visible !important;
-  // }
 }
 
 @media screen and (min-width: 501px) {
@@ -491,12 +481,18 @@ div.content {
   }
   nav.hide-lg {
     visibility: hidden;
+    // display: none;
+  }
+  .login-page {
+    margin-left: -160px;
   }
 }
 
-// @media screen and (max-width: 700px) {
-//   .sidebar a {
-//     text-align: center;
-//     float: none;
-//   }
-// }
+th {
+  background-color: hotpink;
+}
+
+tbody tr:hover td {
+  // background-color: #ff652f;
+  background-color: #ffe400;
+}
