@@ -92,7 +92,7 @@ function Login(props) {
               />
             </Form.Group>
             <div className="action-items">
-              <Link to="/signup" className="btn btn-secondary">
+              <Link to="/signup" className="btn btn-warning">
                 Sign Up
               </Link>
               <Button variant="primary" type="submit">

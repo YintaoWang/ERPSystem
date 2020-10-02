@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 // import { getAllUsers } from '../actions/auth';
 import { addNewItem} from '../actions/inventory';
@@ -12,6 +13,7 @@ import { history } from '../router/AppRouter';
 function AddItem(props) {
 
   const [itemName, setItemName] = useState('');
+  const [itemVendor, setItemVendor] = useState('');
   const [itemWeight, setItemWeight] = useState(0.00);
   const [itemHeight, setItemHeight] = useState(0.00);
   const [itemWidth, setItemWidth] = useState(0.00);
@@ -49,12 +51,12 @@ function AddItem(props) {
         setErrorMsg({additem_error: 'Please enter item name.'});
     } else {
         setIsSubmitted(true);
-        props.dispatch(addNewItem({ itemName, itemWeight, itemHeight, itemWidth, itemLength, itemImage, itemPrice, itemDescription, createdBy}))
+        props.dispatch(addNewItem({ itemName, itemVendor, itemWeight, itemHeight, itemWidth, itemLength, itemImage, itemPrice, itemDescription, createdBy}))
         .then((response) => {
             if (response.success) {
-                setSuccessMsg('Successfully add a item! now redirect to item list page');
+                setSuccessMsg('Successfully add a item!');
                 setErrorMsg('');
-                setTimeout(() => {history.push('/allitems')}, 3000);
+                // setTimeout(() => {history.push('/allitems')}, 3000);
                 //dispatch to all tasks???
             }
         });
@@ -62,7 +64,7 @@ function AddItem(props) {
   }
 
   return (
-      <div className="login-page">
+      <div className="add-page">
       <br/><h1>Add a Item</h1><br/>
       <div className="add-task-form">
           <Form onSubmit={addItem}>
@@ -75,7 +77,8 @@ function AddItem(props) {
               <p className="successMsg centered-message">{successMsg}</p>
               )
           )}
-          <Form.Group controlId="itemName">
+          <Form.Row>
+          <Form.Group as={Col} controlId="itemName">
               <Form.Label>Item Name</Form.Label>
               <Form.Control
               type="text"
@@ -84,6 +87,16 @@ function AddItem(props) {
               onChange={(event) => setItemName(event.target.value)}
               />
           </Form.Group>
+          <Form.Group as={Col} controlId="itemVendor">
+              <Form.Label>Vendor</Form.Label>
+              <Form.Control
+              type="text"
+              name="itemVendor"
+              placeholder="Vendor"
+              onChange={(event) => setItemVendor(event.target.value)}
+              />
+          </Form.Group>
+          </Form.Row>
           <Form.Row>
           <Form.Group as={Col} controlId="itemLength">
               <Form.Label>Length</Form.Label>
@@ -149,6 +162,12 @@ function AddItem(props) {
               />
           </Form.Group>
           <div className="action-items">
+              <Link to="/itemsinfo" className="btn btn-warning">
+              Items Info
+              </Link>
+              <Link to="/updateinstock" className="btn btn-success">
+              Update Instock
+              </Link>
               <Button variant="primary" type="submit">
               Add Item
               </Button>

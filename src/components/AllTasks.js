@@ -50,7 +50,7 @@ function AllTasks(props) {
                             <Card.Subtitle className="mb-2 text-danger">Due: {toLocalDateTime(todoTask.task_due_datetime)}</Card.Subtitle>
                             <Card.Subtitle className="mb-2 text-danger">Priority: {todoTask.task_priority}</Card.Subtitle>
                             <Card.Text>{todoTask.task_description}</Card.Text>
-                            <Card.Footer><ProgressBar animated variant="success" now={todoTask.task_progress} label={`${todoTask.task_progress}%`} /></Card.Footer>
+                            {/* <Card.Footer><ProgressBar animated variant="success" now={todoTask.task_progress} label={`${todoTask.task_progress}%`} /></Card.Footer> */}
                         </Card.Body>
                         </Card>
                         {/* <br/> */}

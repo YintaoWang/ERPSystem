@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import DateTimePicker from 'react-datetime-picker';
 import { connect } from 'react-redux';
 import { Form, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 // import { Link } from 'react-router-dom';
 import { getAllUsers } from '../actions/auth';
@@ -68,7 +69,7 @@ function AddTask(props) {
   }
 
   return (
-      <div className="login-page">
+      <div className="add-page">
       <br/><h1>Add a Task</h1><br/>
       <div className="add-task-form">
           <Form onSubmit={addTask}>
@@ -144,6 +145,9 @@ function AddTask(props) {
               />
           </Form.Group>
           <div className="action-items">
+              <Link to="/alltasks" className="btn btn-warning">
+              All Tasks
+              </Link>
               <Button variant="primary" type="submit">
               Add Task
               </Button>
