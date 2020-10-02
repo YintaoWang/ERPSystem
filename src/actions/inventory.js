@@ -38,5 +38,17 @@ export const updateItem = (data) => {
     }
   };
 };
+
+export const updateInStock = (data) => {
+  return async (dispatch) => {
+    try {
+      await post(`${BASE_API_URL}/updateinstock`, data);
+      return { success: true };
+    } catch (error) {
+      error.response && dispatch(getErrors(error.response.data));
+      return { success: false };
+    }
+  };
+};
   
 //delete a item???
