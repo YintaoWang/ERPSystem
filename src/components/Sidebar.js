@@ -20,7 +20,7 @@ function Sidebar(props) {
     return (
         <div>
             <nav className="navbar navbar-dark bg-dark hide-lg fixed-top">
-                <a class="navbar-brand" href="/dashboard">Hi, {firstName} {lastName}</a>
+                <a className="navbar-brand" href="/dashboard">Hi, {firstName} {lastName}</a>
                 <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -29,18 +29,18 @@ function Sidebar(props) {
             <div className="collapse" id="sidebar">
                 <nav className="nav sidenav flex-column" >
                     <a className="nav-link" style={{fontSize:"22px", marginLeft:"0px"}} href="/dashboard">Dashboard</a>
-                    <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabindex="-1" aria-disabled="true">Tasks</a>
+                    <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabIndex="-1" aria-disabled="true">Tasks</a>
                     {/* <h4>Tasks</h4> */}
                     <a className="nav-link" href="/alltasks">All Tasks</a>
                     <a className="nav-link" href="/addtask">Add Task</a>
                     {/* <h4>Inventory</h4> */}
-                    <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabindex="-1" aria-disabled="true">Inventory</a>
-                    <a className="nav-link" href="/instock">In Stock</a>
-                    <a className="nav-link" href="/allitems">All Items</a>
+                    <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabIndex="-1" aria-disabled="true">Inventory</a>
+                    <a className="nav-link" href="/itemsinfo">Items Info</a>
+                    <a className="nav-link" href="/updateinstock">Update InStock</a>
                     <a className="nav-link" href="/additem">Add Item</a>
                     {/* <h4>Sales Order</h4> */}
-                    <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabindex="-1" aria-disabled="true">Sales Order</a>
-                    <a className="nav-link" href="/salesorder">Sales Order</a>
+                    <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabIndex="-1" aria-disabled="true">Sales Order</a>
+                    <a className="nav-link" href="/salesorders">Sales Orders</a>
                     <a className="nav-link" href="/orderdetail">Order Detail</a>
                     <a className="nav-link" style={{fontSize:"25px", marginLeft:"0px"}} href="/logout">Logout</a>
                 </nav>

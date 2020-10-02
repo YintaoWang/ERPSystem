@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 // import DateTimePicker from 'react-datetime-picker';
 import { connect } from 'react-redux';
 import { Form, Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 import { getAllUsers } from '../actions/auth';
 import { updateTask } from '../actions/tasks';
 import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
 import { toLocalDateTime } from '../utils/common';
-import { history } from '../router/AppRouter';
+// import { history } from '../router/AppRouter';
 
 function UpdateTask(props) {
 
@@ -75,16 +76,17 @@ function UpdateTask(props) {
         .then((response) => {
             if (response.success) {
                 //todo: redirect to?
-                setSuccessMsg('Successfully updated the task! now redirect to tasksBoard');
+                setSuccessMsg('Successfully updated the task!');
+                // setSuccessMsg('Successfully updated the task! now redirect to tasksBoard');
                 setErrorMsg('');
-                setTimeout(() => {history.push('/alltasks')}, 3000);
+                // setTimeout(() => {history.push('/alltasks')}, 3000);
             }
         });
     }
   }
 
   return (
-      <div className="login-page">
+      <div className="update-page">
       <br/><h1>Update Task</h1><br/>
       <div className="add-task-form">
           <Form onSubmit={editTask}>
@@ -194,6 +196,9 @@ function UpdateTask(props) {
               )
           )}
           <div className="action-items">
+              <Link to="/alltasks" className="btn btn-warning">
+              All Tasks
+              </Link>
               <Button variant="primary" type="submit">
               Update
               </Button>

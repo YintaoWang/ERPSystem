@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 // import { getAllUsers } from '../actions/auth';
 import { updateItem} from '../actions/inventory';
@@ -12,6 +13,7 @@ function UpdateItem(props) {
 
   const [itemId, setItemId] = useState(0);
   const [itemName, setItemName] = useState('');
+  const [itemVendor, setItemVendor] = useState('');
   const [itemWeight, setItemWeight] = useState(0.00);
   const [itemHeight, setItemHeight] = useState(0.00);
   const [itemWidth, setItemWidth] = useState(0.00);
@@ -29,6 +31,7 @@ function UpdateItem(props) {
     if (item) {
       setItemId(item.item_id);
       setItemName(item.item_name);
+      setItemVendor(item.item_vendor);
       setItemWeight(item.item_weight);
       setItemHeight(item.item_height);
       setItemWidth(item.item_width);
@@ -62,7 +65,7 @@ function UpdateItem(props) {
         setErrorMsg({updateitem_error: 'Please enter item name.'});
     } else {
         setIsSubmitted(true);
-        props.dispatch(updateItem({ itemId, itemName, itemWeight, itemHeight, itemWidth, itemLength, itemImage, itemPrice, itemDescription, updatedBy}))
+        props.dispatch(updateItem({ itemId, itemName, itemVendor, itemWeight, itemHeight, itemWidth, itemLength, itemImage, itemPrice, itemDescription, updatedBy}))
         .then((response) => {
             if (response.success) {
                 setSuccessMsg('Successfully updated a item!');
@@ -73,7 +76,7 @@ function UpdateItem(props) {
   }
 
   return (
-      <div className="login-page">
+      <div className="update-page">
       <br/><h1>Update Item</h1><br/>
       <div className="add-task-form">
           <Form onSubmit={editItem}>
@@ -86,7 +89,8 @@ function UpdateItem(props) {
               <p className="successMsg centered-message">{successMsg}</p>
               )
           )}
-          <Form.Group controlId="itemName">
+          <Form.Row>
+          <Form.Group as={Col} controlId="itemName">
               <Form.Label>Item Name</Form.Label>
               <Form.Control
               type="text"
@@ -96,6 +100,17 @@ function UpdateItem(props) {
               onChange={(event) => setItemName(event.target.value)}
               />
           </Form.Group>
+          <Form.Group as={Col} controlId="itemVendor">
+              <Form.Label>Vendor</Form.Label>
+              <Form.Control
+              type="text"
+              name="itemVendor"
+              placeholder="Vendor"
+              value={itemVendor}
+              onChange={(event) => setItemVendor(event.target.value)}
+              />
+          </Form.Group>
+          </Form.Row>
           <Form.Row>
           <Form.Group as={Col} controlId="itemLength">
               <Form.Label>Length</Form.Label>
@@ -167,6 +182,12 @@ function UpdateItem(props) {
               />
           </Form.Group>
           <div className="action-items">
+              <Link to="/itemsinfo" className="btn btn-warning">
+              Items Info
+              </Link>
+              <Link to="/updateinstock" className="btn btn-success">
+              Update Instock
+              </Link>
               <Button variant="primary" type="submit">
               Update Item
               </Button>

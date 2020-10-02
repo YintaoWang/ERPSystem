@@ -134,7 +134,7 @@ function Signup(props) {
             />
           </Form.Group>
           <div className="action-items">
-            <Link to="/" className="btn btn-secondary">
+            <Link to="/" className="btn btn-warning">
               Login
             </Link>
             <Button variant="primary" type="submit">
