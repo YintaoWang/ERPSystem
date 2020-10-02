@@ -15,8 +15,9 @@ import UpdateTask from '../components/UpdateTask';
 import AddItem from '../components/AddItem';
 import Sidebar from '../components/Sidebar';
 import { Container, Row, Col, Button, Collapse} from 'react-bootstrap';
-import AllItems from '../components/AllItems';
+import ItemsInfo from '../components/ItemsInfo';
 import UpdateItem from '../components/UpdateItem';
+import UpdateInStock from '../components/UpdateInStock';
 // import '../css/main.scss';
 
 export const history = createBrowserHistory();
@@ -26,40 +27,9 @@ const AppRouter = ({ auth }) => {
 
   return (
     <Router history={history}>
-      <div>
-       
-        {!_.isEmpty(auth.token)? (
-        <div>
-            {/* <NavigationBar /> */}
-        {/* <Row>
-                    <Col lg={2}> */}
-                        <div><Sidebar /></div>
-                    {/* </Col> */}
-                    {/* <Col lg={10}> */}
-                        {/* <div style={{marginLeft: '160px'}}> */}
-                        <div className="content">
-                        <Switch>
-                          <Route path="/" component={Login} exact={true} />
-                          <Route path="/signup" component={Signup} />
-                          <Route path="/logout" component={Logout} />
-                          <Route path="/dashboard" component={Dashboard} />
-                          {/* //to do: delete taskdetail*/}
-                          {/* <Route path="/taskdetail" component={TaskDetail} />  */}
-                          {/* Task Management */}
-                          <Route path="/addtask" component={AddTask} />
-                          <Route path="/alltasks" component={AllTasks} />
-                          <Route path="/updatetask" component={UpdateTask} />
-                          {/* Inventory Management */}
-                          <Route path="/additem" component={AddItem} />
-                          <Route path="/allitems" component={AllItems} />
-                          <Route path="/updateitem" component={UpdateItem} />
-                          {/* Sales Order Management */}
-                        </Switch>
-                        </div>
-                    {/* </Col>  */}
-        {/* </Row> */}
-        </div>):
-        (<div className="container">
+      <div>  
+        {!_.isEmpty(auth.token) && <div><Sidebar /></div>}
+        <div className="content">
           <Switch>
             <Route path="/" component={Login} exact={true} />
             <Route path="/signup" component={Signup} />
@@ -73,28 +43,13 @@ const AppRouter = ({ auth }) => {
             <Route path="/updatetask" component={UpdateTask} />
             {/* Inventory Management */}
             <Route path="/additem" component={AddItem} />
-            <Route path="/allitems" component={AllItems} />
+            <Route path="/itemsinfo" component={ItemsInfo} />
             <Route path="/updateitem" component={UpdateItem} />
+            <Route path="/updateinstock" component={UpdateInStock} />
             {/* Sales Order Management */}
           </Switch>
-        </div>)}
-        
- {/* {!_.isEmpty(auth.token) && <NavigationBar />}
-        <div className="container">
-          <Switch>
-            <Route path="/" component={Login} exact={true} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/addtask" component={AddTask} />
-            <Route path="/alltasks" component={AllTasks} />
-            <Route path="/updatetask" component={UpdateTask} />
-            <Route path="/additem" component={AddItem} />
-            <Route path="/allitems" component={AllItems} />
-            <Route path="/updateitem" component={UpdateItem} />
-          </Switch>
-        </div> */}
-      </div>
+        </div>
+    </div>
     </Router>
   );
 };
