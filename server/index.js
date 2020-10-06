@@ -4,6 +4,7 @@ const authRoute = require('./routes/auth');
 const profileRoute = require('./routes/profile'); //todo: delete
 const tasksRoute = require('./routes/tasks');
 const inventoryRoute = require('./routes/inventory');
+const salesOrdersRoute = require('./routes/salesOrders');
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(authRoute);
 app.use(profileRoute); //todo: delete
 app.use(tasksRoute);
 app.use(inventoryRoute);
+app.use(salesOrdersRoute);
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
