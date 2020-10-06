@@ -18,6 +18,8 @@ import { Container, Row, Col, Button, Collapse} from 'react-bootstrap';
 import ItemsInfo from '../components/ItemsInfo';
 import UpdateItem from '../components/UpdateItem';
 import UpdateInStock from '../components/UpdateInStock';
+import SalesOrders from '../components/SalesOrders';
+import OrderInfo from '../components/OrderInfo';
 // import '../css/main.scss';
 
 export const history = createBrowserHistory();
@@ -47,6 +49,8 @@ const AppRouter = ({ auth }) => {
             <Route path="/updateitem" component={UpdateItem} />
             <Route path="/updateinstock" component={UpdateInStock} />
             {/* Sales Order Management */}
+            <Route path="/salesorders" component={SalesOrders} />
+            <Route path="/orderinfo" component={OrderInfo} />
           </Switch>
         </div>
     </div>
