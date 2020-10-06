@@ -27,7 +27,7 @@ function AllTasks(props) {
         return () => {props.dispatch(resetErrors());};
     }, []);
 
-    const handleDetail = (task) => {
+    const handleSelectedTask = (task) => {
         localStorage.setItem("selectedTask", JSON.stringify(task))
     };
     
@@ -43,7 +43,7 @@ function AllTasks(props) {
                 <h2>ToDo</h2>
                 {todoTasks.map((todoTask) => (
                     <div key={todoTask.task_id} className="left-col">
-                        <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleDetail(todoTask)} style={{textDecoration: 'none'}}>
+                        <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleSelectedTask(todoTask)} style={{textDecoration: 'none'}}>
                         <Card.Header as="h4">{todoTask.task_name}</Card.Header>
                         <Card.Body>
                             <Card.Subtitle className="mb-2 text-danger">Member: {todoTask.task_member}</Card.Subtitle>
@@ -61,7 +61,7 @@ function AllTasks(props) {
                 <h2>Doing</h2>
                 {doingTasks.map((doingTask) => (
                     <div key={doingTask.task_id} className="middle-col">
-                        <Card bg="light" text="dark" border="danger" as="a" href="/updatetask" onClick={() => handleDetail(doingTask)} style={{textDecoration: 'none'}}>
+                        <Card bg="light" text="dark" border="danger" as="a" href="/updatetask" onClick={() => handleSelectedTask(doingTask)} style={{textDecoration: 'none'}}>
                         <Card.Header as="h4">{doingTask.task_name}</Card.Header>
                         <Card.Body>
                             <Card.Subtitle className="mb-2 text-danger">Member: {doingTask.task_member}</Card.Subtitle>
@@ -79,7 +79,7 @@ function AllTasks(props) {
                 <h2>Done</h2>
                 {doneTasks.map((doneTask) => (
                     <div key={doneTask.task_id} className="right-col">
-                        <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleDetail(doneTask)} style={{textDecoration: 'none'}}>
+                        <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleSelectedTask(doneTask)} style={{textDecoration: 'none'}}>
                         <Card.Header as="h4">{doneTask.task_name}</Card.Header>
                         <Card.Body>
                             <Card.Subtitle className="mb-2 text-danger">Member: {doneTask.task_member}</Card.Subtitle>

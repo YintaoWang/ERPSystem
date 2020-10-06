@@ -27,7 +27,7 @@ function ItemsInfo(props) {
     return () => {props.dispatch(resetErrors())}; //ok
   }, []);
 
-  const handleDetail = (item) => {
+  const handleSelectedItem = (item) => {
     // console.log("clicked");
     localStorage.setItem("selectedItem", JSON.stringify(item));
     history.push('/updateitem');
@@ -36,15 +36,15 @@ function ItemsInfo(props) {
   return (
     //todo: add serach conditions: item number
     //todo: export to CSV file?
-    <Container className="dashboard-container">
+    <Container>
         {errorMsg && errorMsg.getallitems_error && (
             <p className="alert alert-danger" role="alert">
             {errorMsg.getallitems_error}
             </p>
         )}
         <h2>Items Information</h2>
-        <Table responsive striped bordered hover variant="light" size="sm">
-            <thead style={{textAlign:"center"}}>
+        <Table className="items-info-table" responsive striped bordered hover variant="light" size="sm">
+            <thead>
                 <tr>
                 <th>ItemId</th>
                 <th>Name</th>
@@ -61,19 +61,11 @@ function ItemsInfo(props) {
             </thead>
             <tbody>
             {items.map((item) => (
-                    <tr key={item.item_id} onClick={() => handleDetail(item)}>
+                    <tr key={item.item_id} onClick={() => handleSelectedItem(item)}>
                     <td style={{textAlign:"center"}}>{item.item_id}</td>
                     <td>{item.item_name}</td>
                     <td>{item.instock_qty_ca}</td>
                     <td>{item.instock_qty_ny}</td>
-                    {/* <td>
-                      <tr>
-                        <td>CA:todo</td>
-                      </tr>
-                      <tr>
-                        <td>TX:todo</td>
-                      </tr>
-                    </td> */}
                     <td>{item.item_price}</td>
                     <td>{item.item_weight}</td>
                     <td>{item.item_length}</td>

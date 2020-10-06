@@ -18,7 +18,7 @@ function Sidebar(props) {
     }, []);
 
     return (
-        <div>
+        <div className="side-bar">
             <nav className="navbar navbar-dark bg-dark hide-lg fixed-top">
                 <a className="navbar-brand" href="/dashboard">Hi, {firstName} {lastName}</a>
                 <button className="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@ function Sidebar(props) {
                     {/* <h4>Sales Order</h4> */}
                     <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabIndex="-1" aria-disabled="true">Sales Order</a>
                     <a className="nav-link" href="/salesorders">Sales Orders</a>
-                    <a className="nav-link" href="/orderdetail">Order Detail</a>
+                    {/* <a className="nav-link" href="/orderdetail">Order Detail</a> */}
                     <a className="nav-link" style={{fontSize:"25px", marginLeft:"0px"}} href="/logout">Logout</a>
                 </nav>
             </div>
