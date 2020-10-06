@@ -19,7 +19,7 @@ export const getTasksByUser = (userid) => {
   return async (dispatch) => {
     try {
       const tasks = await get(`${BASE_API_URL}/gettasksbyuser`, {params: {user_id: userid}});
-      return tasks.data
+      return tasks.data;
     } catch (error) {
       error.response && dispatch(getErrors(error.response.data));
     }
@@ -30,7 +30,7 @@ export const getAllTasks = () => {
     return async (dispatch) => {
       try {
         const tasks = await get(`${BASE_API_URL}/getalltasks`);
-        return tasks.data
+        return tasks.data;
       } catch (error) {
         error.response && dispatch(getErrors(error.response.data));
       }

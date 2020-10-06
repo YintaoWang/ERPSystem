@@ -6,7 +6,6 @@ import { getErrors } from './errors';
 //import { setAuthHeader, removeAuthHeader } from '../utils/common';
 import { post, get } from '../utils/api';
 
-
 // action creator
 export const signIn = (user) => ({
   type: SIGN_IN,
