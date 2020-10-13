@@ -15,7 +15,7 @@ export const maintainSession = () => {
   const user_token = localStorage.getItem('user_token');
   if (user_token) {
     const currentPath = window.location.pathname;
-    if (currentPath === '/' || currentPath === '/register') {
+    if (currentPath === '/' || currentPath === '/signup') {
       history.push('/dashboard');
     }
     const decoded = jwt_decode(user_token);
