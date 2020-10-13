@@ -37,7 +37,7 @@ Router.get('/getorderheaders', authMiddleware, async (req, res) => {
       res.send(result.rows); //201 meaning?
     } catch (error) {
       res.status(400).send({
-          getsalesorders_error: 'Error while retrieving sales orders...Try again later.'
+          getorderheaders_error: 'Error while retrieving sales orders...Try again later.'
       });
     }
 });
