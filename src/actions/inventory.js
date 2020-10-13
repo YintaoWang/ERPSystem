@@ -6,11 +6,12 @@ export const addNewItem = (data) => {
     return async (dispatch) => {
       try {
         console.log(data);
-        await post(`${BASE_API_URL}/addnewitem`, data);
-        return { success: true };
+        const item = await post(`${BASE_API_URL}/addnewitem`, data);
+        // return { success: true };
+        return item.data;
       } catch (error) {
         error.response && dispatch(getErrors(error.response.data));
-        return { success: false };
+        // return { success: false };
       }
     };
 };
@@ -18,18 +19,28 @@ export const addNewItem = (data) => {
 export const getAllItems = () => {
     return async (dispatch) => {
       try {
-        const tasks = await get(`${BASE_API_URL}/getallitems`);
-        return tasks.data
+        const items = await get(`${BASE_API_URL}/getallitems`);
+        return items.data
       } catch (error) {
         error.response && dispatch(getErrors(error.response.data));
       }
     };
 };
 
+export const getItemById = (id) => {
+  return async (dispatch) => {
+    try {
+      const item = await get(`${BASE_API_URL}/getitembyid`, {params: {item_id: id}});
+      return item.data
+    } catch (error) {
+      error.response && dispatch(getErrors(error.response.data));
+    }
+  };
+};
+
 export const updateItem = (data) => {
   return async (dispatch) => {
     try {
-    //   console.log(data);
       await post(`${BASE_API_URL}/updateitem`, data);
       return { success: true };
     } catch (error) {
@@ -51,4 +62,18 @@ export const updateInStock = (data) => {
   };
 };
   
+//upload item image
+export const uploadItemImage = (data) => {
+  return async (dispatch) => {
+    try {
+    //   console.log(data);
+      await post(`${BASE_API_URL}/uploaditemimage`, data);
+      return { success: true };
+    } catch (error) {
+      error.response && dispatch(getErrors(error.response.data));
+      return { success: false };
+    }
+  };
+};
+
 //delete a item???

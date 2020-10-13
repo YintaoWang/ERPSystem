@@ -53,6 +53,7 @@ export const signOut = () => ({
   type: SIGN_OUT
 });
 
+//todo: need to clear all localstorage???
 export const initiateLogout = () => {
   return async (dispatch) => {
     try {
