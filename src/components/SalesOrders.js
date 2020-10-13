@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Accordion, Button, Card, Col, Container, Form, FormGroup, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Form, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { resetErrors } from '../actions/errors';
 import { getOrderLines, getOrderHeaders } from '../actions/salesOrders';
-import { history } from '../router/AppRouter';
+// import { history } from '../router/AppRouter';
 import { toLocalDateTime } from '../utils/common';
 
 function SalesOrders(props) {
@@ -59,9 +59,10 @@ function SalesOrders(props) {
     //todo: add serach conditions: item number
     //todo: export to CSV file?
     <Container>
-        {errorMsg && errorMsg.getsalesorders_error && (
+        {errorMsg && errorMsg.getorderheaders_error && (
+            //todo: add getorderlines_error
             <p className="alert alert-danger" role="alert">
-            {errorMsg.getsalesorders_error}
+            {errorMsg.getorderheaders_error}
             </p>
         )}
         <h2>Sales Orders</h2>
@@ -134,8 +135,8 @@ function SalesOrders(props) {
                 <th>shippingFee</th>
                 <th>totalAmt</th>
                 <th>shipState</th>
-                <th>shipAddr</th>
                 <th>DateTime</th>
+                <th>shipAddr</th>
                 </tr>
             </thead>
             {/* <tbody>
@@ -168,8 +169,8 @@ function SalesOrders(props) {
                     <td>{order.shipping_fee}</td>
                     <td>{order.total_amt}</td>
                     <td>{order.ship_state}</td>
-                    <td>{order.ship_addr}</td>
                     <td>{toLocalDateTime(order.order_datetime)}</td>
+                    <td>{order.ship_addr}</td>
                     </tr>
                     <tr style={{pointerEvents:"none"}}>
                     <td colSpan="12" className="hiddenRow">

@@ -6,7 +6,6 @@ import { getTasksByUser } from '../actions/tasks';
 import { resetErrors } from '../actions/errors';
 import { toLocalDateTime } from '../utils/common';
 
-// class Dashboard extends React.Component {
 function Dashboard(props) {
 
   const [firstName, setFirstName] = useState('');
@@ -50,18 +49,10 @@ function Dashboard(props) {
             </p>
         )}
         <Row>
-            <Col lg={3} className="left-col" >
-            <Card bg="dark" text="light" border="warning" as="a" href="/updatetask" style={{textDecoration: 'none'}}>
-                    <Card.Header as="h3">{new Date().toLocaleDateString()}</Card.Header>
-                    <Card.Body>
-                        <Card.Text>Hi {firstName} {lastName}, {greeting}!</Card.Text>
-                    </Card.Body>
-            </Card>
-            </Col>
-            <Col lg={9} className="right-col" >
-            <h2>Your Tasks</h2>
+            <Col lg={9} className="left-col" >
+            <h2>Hi {firstName} {lastName}, {greeting}!<br/> Your Tasks</h2>
             {tasks.map((task) => (
-                <div key={task.task_id}>
+                <div key={task.task_id} className="user-tasks">
                     {/* <a href="/taskdetail" > */}
                     <Card bg="light" text="dark" border="success" as="a" href="/updatetask" onClick={() => handleDetail(task)} style={{textDecoration: 'none'}}>
                     <Card.Header as="h3">{task.task_name}</Card.Header>
@@ -75,9 +66,18 @@ function Dashboard(props) {
                     </Card.Body>
                     </Card>
                     {/* </a> */}
-                    <br/>
+                    {/* <br/> */}
                 </div>
             ))}
+            </Col>
+            <Col lg={3} className="right-col" >
+                <h2>Today is {new Date().toLocaleDateString()}</h2>
+            {/* <Card bg="dark" text="light" border="warning" as="a" href="/updatetask" style={{textDecoration: 'none'}}>
+                    <Card.Header as="h3">{new Date().toLocaleDateString()}</Card.Header>
+                    <Card.Body>
+                        <Card.Text>Hi {firstName} {lastName}, {greeting}!</Card.Text>
+                    </Card.Body>
+            </Card> */}
             </Col>
         </Row>
     </Container>     

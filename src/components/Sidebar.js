@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import {Nav, Navbar} from "react-bootstrap";
-import { withRouter } from "react-router";
+// import {Nav, Navbar} from "react-bootstrap";
+// import { withRouter } from "react-router";
 
 // class Sidebar extends React.Component {
 function Sidebar(props) {
@@ -28,6 +28,7 @@ function Sidebar(props) {
             <br/>
             <div className="collapse" id="sidebar">
                 <nav className="nav sidenav flex-column" >
+                    <a className="nav-link" style={{fontSize:"22px", marginLeft:"0px"}} href="/dashboard">Profile</a>
                     <a className="nav-link" style={{fontSize:"22px", marginLeft:"0px"}} href="/dashboard">Dashboard</a>
                     <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabIndex="-1" aria-disabled="true">Tasks</a>
                     {/* <h4>Tasks</h4> */}
@@ -35,7 +36,7 @@ function Sidebar(props) {
                     <a className="nav-link" href="/addtask">Add Task</a>
                     {/* <h4>Inventory</h4> */}
                     <a className="nav-link disabled" style={{fontSize:"22px", marginLeft:"0px", color:"#5da2d5"}} href="#" tabIndex="-1" aria-disabled="true">Inventory</a>
-                    <a className="nav-link" href="/itemsinfo">Items Info</a>
+                    <a className="nav-link" href="/allitems">All Items</a>
                     <a className="nav-link" href="/updateinstock">Update InStock</a>
                     <a className="nav-link" href="/additem">Add Item</a>
                     {/* <h4>Sales Order</h4> */}

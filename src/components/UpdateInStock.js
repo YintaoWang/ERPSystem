@@ -236,8 +236,8 @@ function UpdateInStock(props) {
           </Form.Group>
           </Form.Row>
           <div className="action-items">
-              <Link to="/itemsinfo" className="btn btn-warning">
-              Items Info
+              <Link to="/allitems" className="btn btn-warning">
+              All Items
               </Link>
               <Button variant="primary" type="submit">
               Update In Stock

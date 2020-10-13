@@ -56,10 +56,14 @@ function UpdateTask(props) {
         props.dispatch(resetErrors());
     }
   }, []);
+  
+  useEffect(() => {
+    setErrorMsg(props.errors);
+  }, [props.errors]);
 
   useEffect(() => {
-      setErrorMsg(props.errors);
-  }, [props.errors]);
+      setIsSubmitted(false);
+  }, [taskName, taskDueDatetime, taskPriority, taskMemberId, taskDescription, taskComment, taskProgress]);
 
   const editTask = (event) => {
     event.preventDefault();

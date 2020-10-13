@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 // import { getAllUsers } from '../actions/auth';
-import { addNewItem} from '../actions/inventory';
+import { addNewItem, uploadItemImage} from '../actions/inventory';
 import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
-import { history } from '../router/AppRouter';
+// import { history } from '../router/AppRouter';
 
 //todo: image handling
 function AddItem(props) {
 
+//   const [itemId, setItemId] = useState(0);
   const [itemName, setItemName] = useState('');
   const [itemVendor, setItemVendor] = useState('');
   const [itemWeight, setItemWeight] = useState(0.00);
   const [itemHeight, setItemHeight] = useState(0.00);
   const [itemWidth, setItemWidth] = useState(0.00);
   const [itemLength, setItemLength] = useState(0.00);
-  const [itemImage, setItemImage] = useState('todo url'); //todo
+  const [itemImageUrl, setItemImageUrl] = useState(''); //todo
+  const [itemImageFile, setItemImageFile] = useState('');
   const [itemPrice,setItemPrice] = useState(0.00);
   const [itemDescription,setItemDescription] = useState('');
   const [createdBy, setCreatedBy] = useState('');
@@ -40,6 +42,23 @@ function AddItem(props) {
       setErrorMsg(props.errors);
   }, [props.errors]);
 
+  const uploadedImage = React.useRef(null);
+  const imageUploader = React.useRef(null);
+  const handleImageUpload = (event) => {
+    const [file] = event.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImage;
+      current.file = file;
+      reader.onload = event => {
+        current.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+      setItemImageFile(event.target.files[0]);
+    //   setItemImageUrl(itemId + '.jpg');
+    }
+  };
+
   const addItem = (event) => {
     event.preventDefault();
     const fieldsToValidate = [
@@ -51,11 +70,25 @@ function AddItem(props) {
         setErrorMsg({additem_error: 'Please enter item name.'});
     } else {
         setIsSubmitted(true);
-        props.dispatch(addNewItem({ itemName, itemVendor, itemWeight, itemHeight, itemWidth, itemLength, itemImage, itemPrice, itemDescription, createdBy}))
-        .then((response) => {
-            if (response.success) {
-                setSuccessMsg('Successfully add a item!');
-                setErrorMsg('');
+        props.dispatch(addNewItem({ itemName, itemVendor, itemWeight, itemHeight, itemWidth, itemLength, itemImageUrl, itemPrice, itemDescription, createdBy}))
+        .then((item) => {
+            if (item) {
+                if(itemImageFile != '') {
+                    // upload item image
+                    const data = new FormData();
+                    data.append('image', itemImageFile);
+                    data.append('new_file_name', item.item_id);
+                    props.dispatch(uploadItemImage(data))
+                    .then((response) => {
+                        if (response.success) {
+                            setSuccessMsg('Successfully insert a item!');
+                            setErrorMsg('');
+                        }
+                    });
+                } else {
+                    setSuccessMsg('Successfully insert a item!');
+                    setErrorMsg('');
+                }
                 // setTimeout(() => {history.push('/allitems')}, 3000);
                 //dispatch to all tasks???
             }
@@ -77,6 +110,49 @@ function AddItem(props) {
               <p className="successMsg centered-message">{successMsg}</p>
               )
           )}
+          <div
+            // style={{
+            //     display: "flex",
+            //     flexDirection: "column",
+            //     alignItems: "center",
+            //     justifyContent: "center"
+            // }}
+            >
+            Item Image (Click to upload image)
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                ref={imageUploader}
+                style={{
+                display: "none"
+                }}
+            />
+            <div
+                // style={{
+                // height: "60px",
+                // width: "60px",
+                // border: "1px dashed black"
+                // }}
+                onClick={() => imageUploader.current.click()}
+            >
+                <Image
+                ref={uploadedImage}
+                src='http://localhost:5000/items/default.png'
+                // src={BASE_IMAGE_URL + itemImageUrl}
+                rounded 
+                thumbnail 
+                width="200px"
+                // style={{
+                //     width: "100%",
+                //     height: "100%",
+                //     position: "absolute"
+                // }}
+
+                />
+            </div>
+            
+            </div>
           <Form.Row>
           <Form.Group as={Col} controlId="itemName">
               <Form.Label>Item Name</Form.Label>
@@ -155,15 +231,15 @@ function AddItem(props) {
               <Form.Label>Description</Form.Label>
               <Form.Control
               as="textarea"
-              rows="6"
+              rows="4"
               name="itemDescription"
               placeholder="Description"
               onChange={(event) => setItemDescription(event.target.value)}
               />
           </Form.Group>
           <div className="action-items">
-              <Link to="/itemsinfo" className="btn btn-warning">
-              Items Info
+              <Link to="/allitems" className="btn btn-warning">
+              All Items
               </Link>
               <Link to="/updateinstock" className="btn btn-success">
               Update Instock

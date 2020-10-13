@@ -1,10 +1,9 @@
-import React, { useState,useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { validateFields } from '../utils/common';
 import { Link } from 'react-router-dom';
 import { initiateLogin } from '../actions/auth';
-// import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
 
 function Login(props) {

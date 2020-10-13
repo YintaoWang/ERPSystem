@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 // import { getAllUsers } from '../actions/auth';
-import { updateItem} from '../actions/inventory';
+import { updateItem, uploadItemImage, getItemById} from '../actions/inventory';
 import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
+import { BASE_IMAGE_URL } from '../utils/constants';
 
 //todo: image handling
 function UpdateItem(props) {
@@ -18,7 +19,8 @@ function UpdateItem(props) {
   const [itemHeight, setItemHeight] = useState(0.00);
   const [itemWidth, setItemWidth] = useState(0.00);
   const [itemLength, setItemLength] = useState(0.00);
-  const [itemImage, setItemImage] = useState('todo url'); //todo
+  const [itemImageUrl, setItemImageUrl] = useState('');
+  const [itemImageFile, setItemImageFile] =  useState('');
   const [itemPrice,setItemPrice] = useState(0.00);
   const [itemDescription,setItemDescription] = useState('');
   const [updatedBy, setUpdatedBy] = useState('');
@@ -27,18 +29,21 @@ function UpdateItem(props) {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    const item = JSON.parse(localStorage.getItem("selectedItem"));
-    if (item) {
-      setItemId(item.item_id);
-      setItemName(item.item_name);
-      setItemVendor(item.item_vendor);
-      setItemWeight(item.item_weight);
-      setItemHeight(item.item_height);
-      setItemWidth(item.item_width);
-      setItemLength(item.item_length);
-      setItemImage(item.item_image);//todo
-      setItemPrice(item.item_price);
-      setItemDescription(item.item_description);
+    const selectedItem = JSON.parse(localStorage.getItem("selectedItem"));
+    if (selectedItem) {
+        props.dispatch(getItemById(selectedItem.item_id))
+        .then((item) => {
+            setItemId(item.item_id);
+            setItemName(item.item_name);
+            setItemVendor(item.item_vendor);
+            setItemWeight(item.item_weight);
+            setItemHeight(item.item_height);
+            setItemWidth(item.item_width);
+            setItemLength(item.item_length);
+            setItemImageUrl(item.item_image);
+            setItemPrice(item.item_price);
+            setItemDescription(item.item_description);
+        });
     }
 
     if (!_.isEmpty(props.auth)) {
@@ -54,6 +59,27 @@ function UpdateItem(props) {
       setErrorMsg(props.errors);
   }, [props.errors]);
 
+  useEffect(() => {
+    setIsSubmitted(false);
+  }, [itemImageFile, itemName, itemVendor, itemLength, itemWidth, itemHeight, itemWidth, itemPrice, itemDescription]);
+
+  const uploadedImage = React.useRef(null);
+  const imageUploader = React.useRef(null);
+  const handleImageUpload = (event) => {
+    const [file] = event.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImage;
+      current.file = file;
+      reader.onload = event => {
+        current.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+      setItemImageFile(event.target.files[0]);
+      setItemImageUrl(itemId + '.jpg');
+    }
+  };
+
   const editItem = (event) => {
     event.preventDefault();
     const fieldsToValidate = [
@@ -65,11 +91,25 @@ function UpdateItem(props) {
         setErrorMsg({updateitem_error: 'Please enter item name.'});
     } else {
         setIsSubmitted(true);
-        props.dispatch(updateItem({ itemId, itemName, itemVendor, itemWeight, itemHeight, itemWidth, itemLength, itemImage, itemPrice, itemDescription, updatedBy}))
+        props.dispatch(updateItem({ itemId, itemName, itemVendor, itemWeight, itemHeight, itemWidth, itemLength, itemImageUrl, itemPrice, itemDescription, updatedBy}))
         .then((response) => {
             if (response.success) {
-                setSuccessMsg('Successfully updated a item!');
-                setErrorMsg('');
+                if(itemImageFile != '') {
+                    // upload item image
+                    const data = new FormData();
+                    data.append('image', itemImageFile);
+                    data.append('new_file_name', itemId);
+                    props.dispatch(uploadItemImage(data))
+                    .then((response) => {
+                        if (response.success) {
+                            setSuccessMsg('Successfully updated item!');
+                            setErrorMsg('');
+                        }
+                    });
+                } else {
+                    setSuccessMsg('Successfully updated item!');
+                    setErrorMsg('');
+                }
             }
         });
     }
@@ -89,6 +129,52 @@ function UpdateItem(props) {
               <p className="successMsg centered-message">{successMsg}</p>
               )
           )}
+          
+          <div
+            // style={{
+            //     display: "flex",
+            //     flexDirection: "column",
+            //     alignItems: "center",
+            //     justifyContent: "center"
+            // }}
+            >
+            Item Image (Click to upload image)
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                ref={imageUploader}
+                style={{
+                display: "none"
+                }}
+            />
+            <div
+                // style={{
+                // height: "60px",
+                // width: "60px",
+                // border: "1px dashed black"
+                // }}
+                onClick={() => imageUploader.current.click()}
+            >
+                <Image
+                ref={uploadedImage}
+                // src='http://localhost:5000/items/cat.jpg'
+                src={BASE_IMAGE_URL + itemImageUrl}
+                rounded 
+                thumbnail 
+                width="200px"
+                // style={{
+                //     width: "100%",
+                //     height: "100%",
+                //     position: "absolute"
+                // }}
+
+                />
+            </div>
+            
+            </div>
+          {/* <div>Item Image (click to reset)</div> */}
+          {/* <Image src="http://localhost:5000/items/cat.jpg" rounded thumbnail width="200px"/> */}
           <Form.Row>
           <Form.Group as={Col} controlId="itemName">
               <Form.Label>Item Name</Form.Label>
@@ -110,6 +196,9 @@ function UpdateItem(props) {
               onChange={(event) => setItemVendor(event.target.value)}
               />
           </Form.Group>
+          {/* <Col xs={6} md={4}>
+            <Image src="http://localhost:5000/items/cat.jpg" rounded thumbnail width="200px"/>
+          </Col> */}
           </Form.Row>
           <Form.Row>
           <Form.Group as={Col} controlId="itemLength">
@@ -174,7 +263,7 @@ function UpdateItem(props) {
               <Form.Label>Description</Form.Label>
               <Form.Control
               as="textarea"
-              rows="6"
+              rows="4"
               name="itemDescription"
               placeholder="Description"
               value={itemDescription}
@@ -182,8 +271,8 @@ function UpdateItem(props) {
               />
           </Form.Group>
           <div className="action-items">
-              <Link to="/itemsinfo" className="btn btn-warning">
-              Items Info
+              <Link to="/allitems" className="btn btn-warning">
+              All Items
               </Link>
               <Link to="/updateinstock" className="btn btn-success">
               Update Instock
