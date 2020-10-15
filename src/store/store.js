@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import authReducer from '../reducers/auth';
 import errorsReducer from '../reducers/errors';
 // import tasksReducer from '../reducers/tasks';
-import profileReducer from '../reducers/profile'; //todo
+// import profileReducer from '../reducers/profile'; //todo
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -11,7 +11,7 @@ const store = createStore(
     auth: authReducer,
     errors: errorsReducer,
     // tasks: tasksReducer,
-    profile: profileReducer
+    // profile: profileReducer
   }),
   composeEnhancers(applyMiddleware(thunk))
 );
