@@ -14,11 +14,13 @@ import AllTasks from '../components/AllTasks';
 import UpdateTask from '../components/UpdateTask';
 import AddItem from '../components/AddItem';
 import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 // import { Container, Row, Col, Button, Collapse} from 'react-bootstrap';
 import AllItems from '../components/AllItems';
 import UpdateItem from '../components/UpdateItem';
 import UpdateInStock from '../components/UpdateInStock';
 import SalesOrders from '../components/SalesOrders';
+import UpdateProfile from '../components/UpdateProfile';
 // import OrderInfo from '../components/OrderInfo';
 // import '../css/main.scss';
 
@@ -30,12 +32,13 @@ const AppRouter = ({ auth }) => {
   return (
     <Router history={history}>
       <div>  
-        {!_.isEmpty(auth.token) && <div><Sidebar /></div>}
+        {!_.isEmpty(auth.token) && <div><Sidebar/></div>}
         <div className="content">
           <Switch>
             <Route path="/" component={Login} exact={true} />
             <Route path="/signup" component={Signup} />
             <Route path="/logout" component={Logout} />
+            <Route path="/updateprofile" component={UpdateProfile} />
             <Route path="/dashboard" component={Dashboard} />
             {/* //to do: delete taskdetail*/}
             {/* <Route path="/taskdetail" component={TaskDetail} />  */}
@@ -53,6 +56,7 @@ const AppRouter = ({ auth }) => {
             {/* <Route path="/orderinfo" component={OrderInfo} /> */}
           </Switch>
         </div>
+        {!_.isEmpty(auth.token) && <div><Footer/></div>}
     </div>
     </Router>
   );
