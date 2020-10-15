@@ -26,13 +26,14 @@ export const maintainSession = () => {
 };
 
 export const updateStore = (user) => {
-  const { user_id, email, first_name, last_name } = user;
+  const { user_id, email, first_name, last_name, role_type } = user;
   store.dispatch(
     signIn({
       user_id,
       email,
       first_name,
       last_name,
+      role_type,
       token: localStorage.getItem('user_token')
     })
   );
@@ -62,3 +63,11 @@ export const toLocalDateTime = (isoStr) => {
     return isoStr;
   }
 }
+
+export const isManager = () => {
+  const token = localStorage.getItem('user_token');
+  if (token) {
+    const decoded = jwt_decode(token);
+    if (decoded.role_type === 'manager') { return true;}
+  }
+};
