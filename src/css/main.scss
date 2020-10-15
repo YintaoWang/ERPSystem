@@ -16,10 +16,20 @@ body {
   // font-family: Georgia;
   font-family: Times New Roman;
   font-size: 20px;
+  // font-weight: bolder;
+  // font-style: italic;
   // background: #df744a;
   // background: #c38d9e;
   // background: #c38d9e;
-  background: #97caef;
+  // background: #97caef;
+  background-image: url('http://localhost:5000/items/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-color: rgba(33, 223, 134, 0.5);
+  // background-color: rgba(255,255,255,0.5);
+  background-blend-mode: lighten;
+  // opacity: 30%;
   // background: #636b46;
   // background: #66ab8c;
   // background: #90ccf4;
@@ -29,7 +39,8 @@ body {
   // background: #d1e8e2;
   // background: #494e6b;
   color: #031424;
-//   color: #ffdc3d;
+  // color: #ffdc3d;
+  // color: white;
   padding: 1rem;
   letter-spacing: 1px;
 }
@@ -183,6 +194,7 @@ input[type='submit'],
     margin: auto;
     font-size: 2.5rem;
     text-align: left;
+    // background: #ccc;
     // padding: 10px;
     // background: greenyellow;
     @extend %centered;
@@ -316,6 +328,7 @@ input[type='submit'],
     .left-col {
       font-size: 1.5rem;
       background: #f78888;
+      // background: #fedcd2;
       // background: hotpink;
       padding: 12px;
       // padding-left: 12px;
@@ -463,7 +476,7 @@ div.content {
 .items-info-table {
   th {
     text-align: center;
-    background-color: hotpink;
+    // background-color: yellow;
   }
   td {
     white-space: nowrap;
@@ -476,7 +489,7 @@ div.content {
 .order-header-table {
   th {
     text-align: center;
-    background-color: #daad86;
+    // background-color: #daad86;
   }
   td {
     white-space: nowrap;
@@ -491,7 +504,8 @@ div.content {
   // pointer-events: stroke;
   th {
     text-align: center;
-    background-color: mediumpurple;
+    // background-color: mediumpurple;
+    background-color: rgba(33, 223, 134, 0.5);
   }
   td {
     white-space: nowrap;
@@ -507,7 +521,25 @@ div.content {
   width: 100%;
   bottom: 0px;
   text-align: center;
-  h6 {
-    // margin-top: 10px;
+  // h6 {
+  //   // margin-top: 10px;
+  // }
+}
+
+.fixed-head-allitems { 
+  overflow-y: auto; 
+  height: 600px;
+  thead th { 
+    position: sticky; 
+    top: 0;
+  }
+}
+
+.fixed-head-salesorders { 
+  overflow-y: auto; 
+  height: 400px; 
+  .parent-head th { 
+    position: sticky; 
+    top: 0;
   }
 }
