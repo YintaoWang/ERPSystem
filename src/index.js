@@ -20,7 +20,7 @@ const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Provider store={store}>
     <AppRouter/>
-    <Footer/>
+    {/* <Footer/> */}
   </Provider>,
   rootElement
 );
