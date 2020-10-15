@@ -5,11 +5,10 @@ import { Form, Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { validateFields } from '../utils/common';
 import { getAllUsers } from '../actions/auth';
-import { updateTask } from '../actions/tasks';
+import { updateTask, approveFinishedTask } from '../actions/tasks';
 import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
-import { toLocalDateTime } from '../utils/common';
-// import { history } from '../router/AppRouter';
+import { toLocalDateTime, isManager } from '../utils/common';
 
 function UpdateTask(props) {
 
@@ -87,6 +86,19 @@ function UpdateTask(props) {
             }
         });
     }
+  }
+
+  const handleFinishedTaskApproval =  (event) => {
+    event.preventDefault();
+    setIsSubmitted(true);
+    props.dispatch(approveFinishedTask({ taskId, updatedBy}))
+    .then((response) => {
+        if (response.success) {
+            setSuccessMsg('Successfully approved the task! redirect to All Tasks in 3 seconds...');
+            setErrorMsg('');
+            setTimeout(() => {props.history.push('/alltasks')}, 3000);
+        }
+    });
   }
 
   return (
@@ -203,12 +215,16 @@ function UpdateTask(props) {
               <Link to="/alltasks" className="btn btn-warning">
               All Tasks
               </Link>
+              {isManager() && taskProgress===100 && <Button to="/alltasks" className="btn btn-success" onClick={handleFinishedTaskApproval}>
+              Approve
+              </Button>}
               <Button variant="primary" type="submit">
               Update
               </Button>
           </div>
           </Form>
       </div>
+      <br/><br/><br/><br/>
       </div>
   );
 }

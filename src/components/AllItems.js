@@ -42,8 +42,9 @@ function AllItems(props) {
             </p>
         )}
         <h2>All Items</h2>
-        <Table className="items-info-table" responsive striped bordered hover variant="light" size="sm">
-            <thead>
+        <div className="fixed-head-allitems">
+        <table className=" table items-info-table table-striped table-bordered table-light" >
+            <thead className="thead-dark">
                 <tr>
                 <th>ItemId</th>
                 <th>Image</th>
@@ -77,7 +78,9 @@ function AllItems(props) {
                     </tr>
             ))}
             </tbody>
-        </Table>
+        </table>
+        </div>
+        {/* <br/><br/><br/><br/> */}
     </Container>     
   );
 }

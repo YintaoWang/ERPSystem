@@ -10,12 +10,14 @@ function Dashboard(props) {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [role, setRole] = useState('');
   const [tasks, setTasks] = useState([]);
   const [greeting, setGreeting] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     if (!_.isEmpty(props.auth)) {
+        console.log(props.auth);
         props.dispatch(getTasksByUser(props.auth.user_id))
         .then((tasksByUser) => {
             if(tasksByUser) {
@@ -24,6 +26,7 @@ function Dashboard(props) {
         });
         setFirstName(props.auth.first_name);
         setLastName(props.auth.last_name);
+        setRole(props.auth.role_type);
     }
     const currentHour = new Date().getHours();
     if(currentHour < 12){
@@ -50,7 +53,7 @@ function Dashboard(props) {
         )}
         <Row>
             <Col lg={9} className="left-col" >
-            <h2>Hi {firstName} {lastName}, {greeting}!<br/> Your Tasks</h2>
+            <h2>Hi {firstName} {lastName} ({role}), {greeting}!<br/> Your Tasks</h2>
             {tasks.map((task) => (
                 <div key={task.task_id} className="user-tasks">
                     {/* <a href="/taskdetail" > */}
@@ -80,6 +83,7 @@ function Dashboard(props) {
             </Card> */}
             </Col>
         </Row>
+        <br/><br/><br/>
     </Container>     
   );
 }

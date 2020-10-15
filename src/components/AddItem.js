@@ -7,7 +7,6 @@ import { validateFields } from '../utils/common';
 import { addNewItem, uploadItemImage} from '../actions/inventory';
 import _ from 'lodash';
 import { resetErrors } from '../actions/errors';
-// import { history } from '../router/AppRouter';
 
 //todo: image handling
 function AddItem(props) {
@@ -248,6 +247,7 @@ function AddItem(props) {
               Add Item
               </Button>
           </div>
+          <br/><br/><br/><br/>
           </Form>
       </div>
       </div>

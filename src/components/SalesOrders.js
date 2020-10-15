@@ -50,11 +50,6 @@ function SalesOrders(props) {
     });
   }
 
-//   const handleSelectedOrder = (order) => {
-//     localStorage.setItem("selectedOrder", JSON.stringify(order));
-//     history.push('/orderinfo');//todo
-//   };
-
   return (
     //todo: add serach conditions: item number
     //todo: export to CSV file?
@@ -101,7 +96,7 @@ function SalesOrders(props) {
               </Form.Control>
           </Form.Group>
           <Form.Group as={Col} controlId="orderId">
-              <Form.Label>Item Name</Form.Label>
+              <Form.Label>Order Id</Form.Label>
               <Form.Control
               type="number"
               name="orderId"
@@ -112,19 +107,14 @@ function SalesOrders(props) {
           </Form.Group>
           </Form.Row>
           <div className="action-items">
-              {/* <Link to="/itemsinfo" className="btn btn-warning">
-              Items Info
-              </Link>
-              <Link to="/updateinstock" className="btn btn-success">
-              Update Instock
-              </Link> */}
               <Button variant="primary" type="submit">
               Search
               </Button>
           </div>
         </Form>   
-        <Table className="order-header-table" responsive striped bordered hover variant="light" size="sm">
-            <thead>
+        <div className="fixed-head-salesorders">
+        <table className="table order-header-table table-striped table-bordered table-light">
+            <thead className="thead-dark parent-head">
                 <tr>
                 <th>orderId</th>
                 <th>channel</th>
@@ -139,27 +129,10 @@ function SalesOrders(props) {
                 <th>shipAddr</th>
                 </tr>
             </thead>
-            {/* <tbody>
-            {salesOrders.map((order) => (
-                    <tr key={order.order_id} onClick={() => handleSelectedOrder(order)}>
-                    <td style={{textAlign:"center"}}>{order.order_id}</td>
-                    <td>{order.channel}</td>
-                    <td>{order.subtotal_amt}</td>
-                    <td>{order.tax_amt}</td>
-                    <td>{order.tax_rate}%</td>
-                    <td>{order.discount}</td>
-                    <td>{order.shipping_fee}</td>
-                    <td>{order.total_amt}</td>
-                    <td>{order.ship_state}</td>
-                    <td>{order.ship_addr}</td>
-                    <td>{toLocalDateTime(order.order_datetime)}</td>
-                    </tr>
-            ))}
-            </tbody> */}
             <tbody>
             {salesOrders.map((order) => (
                     <Fragment key={order.order_id}>
-                    <tr data-toggle="collapse" data-target={"#demo".concat(order.order_id)} className="accordion-toggle" key={order.order_id}>
+                    <tr data-toggle="collapse" data-target={"#id".concat(order.order_id)} className="accordion-toggle" key={order.order_id}>
                     <td>{order.order_id}</td>
                     <td>{order.channel}</td>
                     <td>{order.subtotal_amt}</td>
@@ -174,7 +147,7 @@ function SalesOrders(props) {
                     </tr>
                     <tr style={{pointerEvents:"none"}}>
                     <td colSpan="12" className="hiddenRow">
-                        <div className="accordian-body collapse" id={"demo".concat(order.order_id)}>
+                        <div className="accordian-body collapse" id={"id".concat(order.order_id)}>
                             <Table className="order-line-table" striped bordered hover variant="dark" size="sm">
                                 <thead>
                                     <tr>
@@ -211,7 +184,8 @@ function SalesOrders(props) {
                     </Fragment>
             ))}
             </tbody>
-        </Table>
+        </table>
+        </div>
     </Container>     
   );
 }

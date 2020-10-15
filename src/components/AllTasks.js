@@ -5,7 +5,10 @@ import { Container, Row, Col, Card, ProgressBar} from 'react-bootstrap';
 import { resetErrors } from '../actions/errors';
 import { getAllTasks } from '../actions/tasks';
 import { toLocalDateTime } from '../utils/common';
-
+/**
+ * approved tasks will not be displayed.
+ * 
+ */
 function AllTasks(props) {
 
     const [todoTasks, setTodoTasks] = useState([]);
@@ -94,6 +97,7 @@ function AllTasks(props) {
                 ))}
                 </Col>
             </Row>
+            <br/>
         </Container>     
     );
 }

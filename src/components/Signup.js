@@ -11,7 +11,7 @@ import { resetErrors } from '../actions/errors';
 function Signup(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [role, setRole] = useState('employee');
+  const [role, setRole] = useState('undefined');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCPassword] = useState('');
@@ -101,6 +101,7 @@ function Signup(props) {
               value={role}
               onChange={(event) => setRole(event.target.value)}
             >
+                <option value='undefined'>Undefined</option>
                 <option value='employee'>Employee</option>
                 <option value='manager'>Manager</option>
             </Form.Control>
