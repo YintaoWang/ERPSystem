@@ -156,4 +156,44 @@ Router.post('/updatetask', authMiddleware, async (req, res) => {
   }
 });
 
+Router.post('/approvefinishedtask', authMiddleware, async (req, res) => {
+  try {
+    const { taskId, updatedBy } = req.body;
+    const validFieldsToUpdate = [
+      'taskId',
+      'updatedBy'
+    ];
+    const receivedFields = Object.keys(req.body);
+    const isInvalidFieldProvided = isInvalidField(
+      receivedFields,
+      validFieldsToUpdate
+    );
+
+    if (isInvalidFieldProvided) {
+      return res.status(400).send({
+        updatetask_error: 'Invalid field.'
+      });
+    }
+
+    // const memberid = Number(taskMemberId);
+    // const result = await pool.query(
+    //     'select first_name, last_name from erp_user where user_id=$1',
+    //     [memberid]//todo
+    // );
+    // const memberName = result.rows[0].first_name + " " + result.rows[0].last_name;
+    // dueDateTime = null;
+    // if(!_.isEmpty(taskDueDatetime)){ dueDateTime = new Date(taskDueDatetime);}
+    // const dueDateTime = new Date(taskDueDatetime);
+    // const hashedPassword = await bcrypt.hash(password, 8);
+    await pool.query(
+      'update task set is_approved=$1, approved_by=$2, approved_datetime=CURRENT_TIMESTAMP where task_id=$3',
+      [true, updatedBy, Number(taskId)]
+    );
+    res.status(201).send();
+  } catch (error) {
+    res.status(400).send({
+      updatetask_error: 'Error while approving task...Try again later.'
+    });
+  }
+});
 module.exports = Router;

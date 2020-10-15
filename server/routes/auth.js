@@ -85,6 +85,34 @@ Router.post('/signin', async (req, res) => {
   }
 });
 
+Router.post('/updateprofile', async (req, res) => {
+  try {
+    const { firstName, lastName, role, userId } = req.body;
+    const newProfile = await pool.query(
+      'update erp_user set first_name=$1, last_name=$2, role_type=$3 where user_id=$4 returning *',
+      [firstName, lastName, role, userId]
+    );
+    const user = newProfile.rows[0];
+    const token = await generateAuthToken(user);
+    const result = await pool.query(
+      'update tokens set access_token=$1 where user_id=$2 returning *',
+      [token, userId]
+    );
+    if (!result.rows[0]) {
+      return res.status(400).send({
+        updateprofile_error: 'Error while updating profile..Try again later.'
+      });
+    }
+    user.token = token;
+    delete user.password;
+    res.send(user);
+  } catch (error) {
+    res.status(400).send({
+      updateprofile_error: 'Error while updating profile..Try again later.'
+    });
+  }
+});
+
 Router.post('/logout', authMiddleware, async (req, res) => {
   try {
     const { userid, access_token } = req.user;
