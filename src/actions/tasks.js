@@ -49,5 +49,16 @@ export const updateTask = (data) => {
     }
   };
 };
-  
 
+export const approveFinishedTask = (data) => {
+  return async (dispatch) => {
+    try {
+      console.log(data);
+      await post(`${BASE_API_URL}/approvefinishedtask`, data);
+      return { success: true };
+    } catch (error) {
+      error.response && dispatch(getErrors(error.response.data));
+      return { success: false };
+    }
+  };
+};

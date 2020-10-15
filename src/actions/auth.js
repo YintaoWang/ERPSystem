@@ -49,6 +49,21 @@ export const registerNewUser = (data) => {
   };
 };
 
+export const updateProfile = (data) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(`${BASE_API_URL}/updateprofile`, data);
+      const newProfile = result.data;
+      localStorage.setItem('user_token', newProfile.token);
+      dispatch(signIn(newProfile));
+      return { success: true };
+    } catch (error) {
+      error.response && dispatch(getErrors(error.response.data));
+      return { success: false };
+    }
+  };
+};
+
 export const signOut = () => ({
   type: SIGN_OUT
 });
