@@ -10,7 +10,8 @@ const isInvalidField = (receivedFields, validFieldsToUpdate) => {
 
 const validateUser = async (email, password) => {
   const result = await pool.query(
-    'select user_id, first_name, Last_name, email, password from erp_user where email = $1',
+    // 'select user_id, first_name, Last_name, email, password from erp_user where email = $1',
+    'select * from erp_user where email = $1',
     [email]
   );
   const user = result.rows[0];
@@ -28,9 +29,9 @@ const validateUser = async (email, password) => {
 };
 
 const generateAuthToken = async (user) => {
-  const { user_id, email, first_name, last_name } = user; //todo, need first_name, last_name
+  const { user_id, email, first_name, last_name, role_type} = user; //todo, need first_name, last_name
   const secret = process.env.secret;
-  const token = await jwt.sign({ user_id, email, first_name, last_name }, secret); //todo
+  const token = await jwt.sign({ user_id, email, first_name, last_name, role_type }, secret); 
   return token;
 };
 
